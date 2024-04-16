@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone Detection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('../static/images/Drone.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      color: #e60b0b;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      color: #2ce210;
+      text-align: center;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    form {
+      background-color: rgba(93, 87, 87, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center; /* Align form items center */
+    }
+
+    .file-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Align file input and preview center */
+    }
+
+    input[type="file"] {
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 200px;
+      font-size: 16px;
+      background-color: #f8f8f8;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    input[type="file"]:focus {
+      border-color: #66afe9;
+      outline: none;
+    }
+
+    #preview {
+      width: 200px; /* Fixed width for preview image */
+      height: auto;
+      margin-top: 10px; /* Add margin-top for spacing */
+      object-fit: cover;
+      display: none;
+    }
+
+    select {
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 200px;
+      font-size: 16px;
+      background-color: #f8f8f8;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    select:focus {
+      border-color: #66afe9;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      background-color: #e60b0b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Unmanned Aerial Vehicle Detection</h1>
+  <form id="modelForm" action="/" method="post" enctype="multipart/form-data">
+    <div class="file-upload">
+      <h2>Upload an image/video to detect drone</h2>
+      <input type="file" id="file-input" name="file" accept="image/*,video/*" onchange="previewImage(event)">
+      <img id="preview" src="" alt="Image Preview">
+      <label for="model"><h2>Choose a model:</h2></label>
+      <select id="model" name="model" >
+        <option value="model1">Faster Rcnn</option>
+        <option value="model2">Single Shot Decoder</option>
+        <option value="model3">Yolo</option>
+      </select>
+    </div>
+    <button type="submit">Predict</button>
+  </form>
+  <script>
+    function previewImage(event) {
+      const preview = document.getElementById('preview');
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function() {
+        preview.src = reader.result;
+        preview.style.display = 'block';
+      }
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function submitForm() {
+      document.getElementById("modelForm").submit();
+    }
+  </script>
+</body>
+</html>

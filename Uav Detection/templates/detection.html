@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detected Drone Output</title>
+    <style>
+        body {
+            background-image: url('../static/images/Drone.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #e60b0b;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            color: #2ce210;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .output {
+            text-align: center;
+            max-width: 50%;
+            max-height: 50%;
+            overflow: visible;
+        }
+        .output img,
+        .output video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #e60b0b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="output">
+        <h1>Unmanned Aerial Vehicle Detection</h1>
+        {% if image_url %}   
+            <h2>Predicted image:</h2>
+            <img src="{{ image_url }}" alt="Detected Drone">
+        {% elif video_url %}
+            <h2>Predicted video:</h2>
+           <!-- <video controls> 
+                <source src="{{ video_url }}" type="video/mp4">
+                
+                Your browser does not support the video tag.
+            </video>-->
+            <button onclick="openVideoInBrowser('{{ video_url }}')">Download</button>
+        {% endif %}
+        <div class="button-container">     
+            <button onclick="redirectToHome()">Back to Home</button>
+        </div>
+    </div>
+    <script>
+        function redirectToHome() {
+            window.location.href = "/";
+        }
+        function openVideoInBrowser(videoUrl) {
+            window.open(videoUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
